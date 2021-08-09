@@ -1,5 +1,6 @@
 #include "sudoku.h"
 
+// Find next empty slot in grid
 Position find_empty(int** grid) {
     int i, j;
     Position pos;
@@ -13,6 +14,7 @@ Position find_empty(int** grid) {
             }
         }
     }    
+    // return -1 if no more empty slots (puzzle is solved)
     pos.row = -1;
     pos.col = -1;
     return pos;
@@ -66,26 +68,27 @@ bool solve(int** grid) {
     Position empty_pos;
     Position* pos_ptr;
 
-    empty_pos = find_empty(grid); 
-    pos_ptr = &empty_pos;
+    empty_pos = find_empty(grid); // Get next empty position
+    pos_ptr = &empty_pos;         // set pointer to empty position
 
-    if ( (empty_pos.row == -1) || (empty_pos.col == -1) ) {
+    if ( (empty_pos.row == -1) || (empty_pos.col == -1) ) { // if puzzle solving is complete
         return true;
     }
-    else {
+    else {                                                  // else: set row and col to empty positions
         row = empty_pos.row;
-        col = empty_pos.col;        
+        col = empty_pos.col;
     }
 
-    for (i = 1; i <= 9; i++) {
-        if ( valid(grid, pos_ptr, i) ) {
-            grid[row][col] = i; 
+    for (i = 1; i <= 9; i++) {              // for values 1 - 9:
+        if ( valid(grid, pos_ptr, i) ) {    // if current value is valid:
+            grid[row][col] = i;             // set empty position to value
 
-            if ( solve(grid) ) {
+            if ( solve(grid) ) {            // recursively call solve with new value
                 return true;
             }
-            grid[row][col] = 0;
+            grid[row][col] = 0; // if solve returned false (i.e. the next empty cell does not have a solution): reset current cell, and attempt next number
         }  
     }
+    // if no number worked for current cell: return false so the previous cell can be re-evaluated
     return false;
 }

@@ -7,11 +7,11 @@ import game_functions as gf
 def run_game():
     # Initialize and create game screen
     pygame.init()
-    settings = Settings()
-    screen = pygame.display.set_mode( (settings.screen_width, settings.screen_height) )
+    settings = Settings()                                                               # Set settings
+    screen = pygame.display.set_mode( (settings.screen_width, settings.screen_height) ) # Initialize screen
     pygame.display.set_caption("Sudoku")
-    unsolved_grid = gf.read_file("grid.txt")
-    solved_grid = gf.solve_grid(settings, "solved_puzzle.txt")
+    unsolved_grid = gf.read_file("grid.txt")                                            # Get unsolved grid
+    solved_grid = gf.solve_grid(settings, "solved_puzzle.txt")                          # Solve grid, then get solved grid
 
     # Main loop for game
     while True:

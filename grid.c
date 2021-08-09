@@ -1,6 +1,7 @@
 #include "sudoku.h"
 
 int** create_grid() {
+    // Grid is 2d array (double pointer)
     int** grid;
     int i=0, j=0;
     char current_char;
@@ -10,33 +11,36 @@ int** create_grid() {
     FILE* f_ptr;
     f_ptr = fopen("grid.txt", "r");
 
+    // If something went wrong in opening file
     if (f_ptr == NULL) {
         printf("File not found. Exiting.");
         exit(1);
     }
 
     while ( (current_char = fgetc(f_ptr)) != EOF ) {
-        if(current_char == ',' || current_char == ' ') { }
-        else if (current_char == '\n') {
+        if(current_char == ',' || current_char == ' ') { } // if current char is a comma or space: do nothing, go next
+        else if (current_char == '\n') {                   // if current char is new line: increment i (row count)
             ++i;
         }
-        else {
-            array[i][j] = (int)current_char - '0';
+        else {                                             // if current char is a number: 
+            array[i][j] = (int)current_char - '0';         // convert to integer and save to array
 
-            if( j == 8) { j = 0; }
-            else { ++j; }
+            if( j == 8 ) { j = 0; }                        // if j is at final column: reset
+            else { ++j; }                                  // else: increment j (column count)
         }
     }
 
+    // close file
     fclose(f_ptr);
 
-    // Create 9 arrays
-    grid = (int**)malloc(9*sizeof(int*));
+    // Allocate memory for 9 int pointers
+    grid = (int**)malloc(9*sizeof(int*)); // points to pointers
 
     for (i = 0; i < 9; i++) {
-        grid[i] = (int*)malloc(9*sizeof(int)); 
+        // allocate memory for 9 ints
+        grid[i] = (int*)malloc(9*sizeof(int)); // rows
         for (j = 0; j < 9; j++) {
-            grid[i][j] = array[i][j];
+            grid[i][j] = array[i][j]; // save array to heap
         }
     }
 
@@ -74,6 +78,7 @@ void save_grid(int** grid) {
     int i,j;
     char current_char;
 
+    // open file for write
     FILE* f_ptr;
     f_ptr = fopen("solved_puzzle.txt", "w");
 

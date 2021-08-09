@@ -1,15 +1,11 @@
 #include "sudoku.h"
 
 int main(int argc, char* argv[]) {
+    // Get unsolved grid
     int** grid;
     grid = create_grid(); 
-
-    print_grid(grid);
-
-    printf("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n");
-
+    // Solve grid and save to file
     solve(grid);
-    print_grid(grid);
     save_grid(grid);
 
     return 0;
