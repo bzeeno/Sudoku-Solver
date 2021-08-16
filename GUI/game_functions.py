@@ -69,8 +69,13 @@ def read_file(filename):
 def solve_grid(settings, filename):
     # compile c code
     result = subprocess.run(settings.c_compile)
+
     # run executable from c code
-    subprocess.run("./sudoku")
+    current_dir = os.getcwd()                   # get current directory
+    os.chdir(settings.solve_dir)                # change directory to where the solver executable is stored
+    subprocess.run("./sudoku")                  # run executable
+    os.chdir(current_dir)                       # change back to current directory
+
     # get solved puzzle
     solved_grid = read_file(filename)
     return solved_grid

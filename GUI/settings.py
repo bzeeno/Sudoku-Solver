@@ -5,9 +5,11 @@ class Settings():
 
     def __init__(self):
         """ Initialize sudoku settings """
+
+        self.solve_dir = "../Solver/"                                           # Directory with C code
         
         self.solved = False                                                 # Boolean to tell if puzzle is solved
-        self.c_compile = ["gcc", "sudoku.c", "grid.c", "solve.c", "-o", "sudoku"]
+        self.c_compile = ["gcc", "sudoku.c", "grid.c", "solve.c", "-o", "sudoku", self.solve_dir]
 
         # Screen settings
         self.screen_width = 800                                             # Screen Width
